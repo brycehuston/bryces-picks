@@ -4,15 +4,24 @@ import { FormEvent, Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import Image from 'next/image'
 import { addUserEmailToProduct } from '@/lib/actions'
+import { useEffect } from 'react';
 
 interface Props {
   productId: string
 }
 
 const Modal = ({ productId }: Props) => {
-  let [isOpen, setIsOpen] = useState(true)
+  let [isOpen, setIsOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [email, setEmail] = useState('');
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+        setIsOpen(true);
+    }, 5000); // Delay of 5 seconds
+  
+    return () => clearTimeout(timer); // Clean up the timer
+  }, []);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
